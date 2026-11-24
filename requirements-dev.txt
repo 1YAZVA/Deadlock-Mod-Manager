@@ -1,0 +1,4 @@
+# Зависимости разработки и сборки (см. docs/BUILD.md)
+-r requirements.txt
+pyinstaller>=6.6
+pillow>=10.0
