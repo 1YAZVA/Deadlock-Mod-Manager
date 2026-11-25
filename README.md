@@ -6,8 +6,8 @@
 в системном трее.
 
 > Тёмный интерфейс в стиле Deadlock и deadlockru.ru: чёрно-серый фон,
-> мятно-зелёный и бирюзовый акценты, логотип «глаз в шестерёнке» — в шапке,
-> иконке `.exe` и в трее.
+> мятно-зелёный и бирюзовый акценты, фирменная эмблема «глаз в прицеле» — в
+> шапке, иконке `.exe` и в трее.
 
 ![CI](https://github.com/1YAZVA/Deadlock-Mod-Manager/actions/workflows/build.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
@@ -79,7 +79,7 @@ Deadlock-Mod-Manager/
 │   │   ├── mods.py            # .vpk: установка/вкл-выкл/Vanilla-бэкап
 │   │   └── system.py          # автозапуск, протокол, Проводник
 │   └── ui/                    # PyQt6: окно, страницы, тема, трей, воркеры
-├── tools/make_icons.py        # логотип «глаз в шестерёнке» → icon.ico
+├── tools/make_icons.py        # эмблема «глаз в прицеле» → icon.ico
 ├── scripts/build_exe.bat      # venv + PyInstaller
 ├── scripts/installer.iss      # Inno Setup → Setup_DLMM.exe
 └── .github/workflows/build.yml# CI: тег v* → Release с установщиком
