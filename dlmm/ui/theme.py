@@ -209,7 +209,11 @@ def gold_glow(widget, blur: int = 18, opacity: float = 90) -> None:
     Например: 0 0 10px #c8a96a8c у золотых кнопок, 0 0 26px #c8a96a24
     у карточек. QGraphicsDropShadowEffect без смещения = ореол.
     """
-    from PyQt6.QtGui import QColor, QGraphicsDropShadowEffect
+    # QGraphicsDropShadowEffect живёт в QtWidgets (в PyQt6, как и в Qt C++),
+    # QColor — в QtGui. Раньше класс искали в QtGui и приложение падало
+    # при старте: ImportError из gold_glow (см. трейсбек релиза 1.0.1).
+    from PyQt6.QtGui import QColor
+    from PyQt6.QtWidgets import QGraphicsDropShadowEffect
 
     effect = QGraphicsDropShadowEffect(widget)
     effect.setBlurRadius(blur)
