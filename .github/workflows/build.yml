@@ -25,6 +25,9 @@ jobs:
   build:
     if: ${{ github.event_name == 'workflow_dispatch' || github.ref_type == 'tag' || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')) }}
     runs-on: windows-latest
+    env:
+      # Кириллица в print() Python-скриптов на Windows-раннере (cp1252).
+      PYTHONUTF8: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4

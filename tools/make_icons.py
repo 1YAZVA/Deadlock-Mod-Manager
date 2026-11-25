@@ -72,6 +72,12 @@ def save_ico(image, path: Path) -> None:
 
 
 def main(argv: list[str]) -> int:
+    # На Windows (CI-раннер, cp1252/cp437) кириллица в print() вызывает
+    # UnicodeEncodeError и роняет скрипт ПОСЛЕ успешной сборки — переключаем
+    # потоки вывода в UTF-8 явно.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
     try:
         from PIL import Image  # noqa: F401 — проверка наличия Pillow
     except ImportError:
