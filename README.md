@@ -9,9 +9,10 @@
 > мятно-зелёный и бирюзовый акценты, фирменная эмблема «глаз в прицеле» — в
 > шапке, иконке `.exe` и в трее.
 
-![CI](https://github.com/1YAZVA/Deadlock-Mod-Manager/actions/workflows/build.yml/badge.svg)
+[![CI](https://github.com/1YAZVA/Deadlock-Mod-Manager/actions/workflows/build.yml/badge.svg)](https://github.com/1YAZVA/Deadlock-Mod-Manager/actions/workflows/build.yml)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
+[![Download](https://img.shields.io/badge/%D0%A1%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C-Setup__DLMM.exe-43E29B)](https://github.com/1YAZVA/Deadlock-Mod-Manager/releases/latest/download/Setup_DLMM.exe)
 
 ## Возможности
 
@@ -26,15 +27,25 @@
 | Установка «в 1 клик» | регистрируется протокол `deadlock-mod-manager://` — кнопка «Mod installer» на странице мода GameBanana открывает приложение и сразу ставит мод |
 | Установщик | `Setup_DLMM.exe` (Inno Setup): ярлыки, запись в «Установка и удаление программ», иконка из логотипа |
 
-## Быстрый старт (игроку)
+## Установка — один файл, без Python и других программ
 
-1. Скачайте `Setup_DLMM.exe` со страницы
-   [Releases](https://github.com/1YAZVA/Deadlock-Mod-Manager/releases)
-   (или соберите сами — см. [docs/BUILD.md](docs/BUILD.md)).
-2. Установите (без прав администратора, в `%LOCALAPPDATA%\Programs`).
+Пользователю нужны два клика: скачать и запустить. Внутри установщика уже
+всё — интерпретатор Python, PyQt6 и библиотеки (PyInstaller-сборка), поэтому
+скачивать что-то ещё не нужно.
+
+1. Скачайте **[`Setup_DLMM.exe`](https://github.com/1YAZVA/Deadlock-Mod-Manager/releases/latest/download/Setup_DLMM.exe)**
+   со страницы [Releases](https://github.com/1YAZVA/Deadlock-Mod-Manager/releases/latest).
+2. Установите («Далее → Установить», без прав администратора; ярлыки в
+   «Пуск» и по галочке на рабочий стол).
 3. Запустите — путь к игре определится автоматически; в противном случае
    укажите папку `steamapps/common/Citadel` на странице «Настройки».
 4. Найдите мод в каталоге → **Установить** → **Играть с модами**.
+
+Portable-вариант: `DeadlockModManager-Portable-win64.zip` из того же Release —
+распаковать в любую папку и запустить `DeadlockModManager.exe`.
+
+> SmartScreen при первом запуске может спросить подтверждение: «Подробнее» →
+> «Выполнить в любом случае» (файл без платной цифровой подписи).
 
 ## Быстрый старт (разработчику)
 
@@ -82,7 +93,7 @@ Deadlock-Mod-Manager/
 ├── tools/make_icons.py        # эмблема «глаз в прицеле» → icon.ico
 ├── scripts/build_exe.bat      # venv + PyInstaller
 ├── scripts/installer.iss      # Inno Setup → Setup_DLMM.exe
-└── .github/workflows/build.yml# CI: тег v* → Release с установщиком
+└── .github/workflows/build.yml# CI: [release]/тег v*/Run → Setup_DLMM.exe в Releases
 ```
 
 Подробности: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) ·

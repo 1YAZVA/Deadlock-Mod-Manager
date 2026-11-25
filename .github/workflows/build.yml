@@ -1,0 +1,87 @@
+name: Build Windows installer
+
+# Сборка Setup_DLMM.exe и публикация в GitHub Releases.
+# Пользователю в итоге нужен один файл Setup_DLMM.exe: Python и все
+# библиотеки уже упакованы внутрь (PyInstaller onedir + Inno Setup).
+#
+# Когда запускается сборка с публикацией:
+#   * коммит в main со словом [release] в сообщении;
+#   * пуш тега v*;
+#   * кнопка Run workflow во вкладке Actions (workflow_dispatch).
+# Пуши в другие ветки и обычные коммиты в main — job пропускается (skipped).
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dlmm-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.ref_type == 'tag' || (github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[release]')) }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Зависимости
+        run: pip install -r requirements-dev.txt
+
+      - name: Версия приложения (dlmm/__init__.py)
+        shell: bash
+        run: |
+          VER=$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' dlmm/__init__.py)
+          if [ -z "$VER" ]; then
+            echo "Не удалось прочитать версию из dlmm/__init__.py"
+            exit 1
+          fi
+          echo "APP_VERSION=$VER" >> "$GITHUB_ENV"
+          echo "Версия: $VER"
+
+      - name: Иконки (assets из встроенного логотипа)
+        run: python tools/make_icons.py
+
+      - name: Сборка .exe (PyInstaller)
+        run: pyinstaller --noconfirm --clean build.spec
+
+      - name: Portable-архив
+        shell: pwsh
+        run: Compress-Archive -Path dist/DeadlockModManager/* `
+          -DestinationPath dist/DeadlockModManager-Portable-win64.zip -Force
+
+      - name: Установщик (Inno Setup)
+        shell: pwsh
+        run: |
+          choco install innosetup -y --no-progress
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          & $iscc scripts/installer.iss /DAppVersion=$env:APP_VERSION
+
+      - name: Артефакты во вкладке Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: Setup_DLMM
+          path: |
+            dist/installer/Setup_DLMM.exe
+            dist/DeadlockModManager-Portable-win64.zip
+          if-no-files-found: error
+
+      - name: Публикация в Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.APP_VERSION }}
+          name: Deadlock Mod Manager v${{ env.APP_VERSION }}
+          body_path: .github/RELEASE_BODY.md
+          generate_release_notes: true
+          files: |
+            dist/installer/Setup_DLMM.exe
+            dist/DeadlockModManager-Portable-win64.zip

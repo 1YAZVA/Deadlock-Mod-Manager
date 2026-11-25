@@ -13,7 +13,11 @@
 
 #define AppName "Deadlock Mod Manager"
 #define AppExe "DeadlockModManager.exe"
+; Версия передаётся из CI: iscc scripts\installer.iss /DAppVersion=1.0.0
+; Локальная сборка без /D использует значение по умолчанию.
+#ifndef AppVersion
 #define AppVersion "1.0.0"
+#endif
 #define AppPublisher "Deadlock Mod Manager Contributors"
 #define AppId "{{8C1A5E5F-7E28-4B77-9D9B-2F6C0A11D3AA}"
 

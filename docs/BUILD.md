@@ -68,12 +68,25 @@ python tools\make_icons.py путь\к\логотипу.png
 
 ## Автоматическая сборка (CI)
 
-Workflow `.github/workflows/build.yml` на windows-latest:
+Workflow `.github/workflows/build.yml` на windows-latest собирает `.exe`,
+`Setup_DLMM.exe` и portable-zip и **сам публикует их в GitHub Releases** —
+пользователю достаточно скачать готовый `Setup_DLMM.exe`, ему не нужно ставить
+Python или собирать проект самостоятельно.
 
-* собирает `.exe` и `Setup_DLMM.exe`;
-* по тегу `v*` публикует установщик в GitHub Releases:
-  `git tag v1.0.0 && git push origin v1.0.0`;
-* `workflow_dispatch` — ручной запуск: артефакт появится во вкладке Actions.
+Запустить сборку с публикацией можно любым из способов:
+
+* коммит в `main` со словом `[release]` в сообщении — CI соберёт и опубликует
+  Release автоматически (тег `v<версия>` создаётся сам, версия берётся из
+  `dlmm/__init__.py`);
+* тег: `git tag v1.0.0 && git push origin v1.0.0`;
+* кнопка **Run workflow** во вкладке Actions (`workflow_dispatch`).
+
+Пуши в другие ветки и обычные коммиты без `[release]` — job просто
+пропускается (skipped), минуты runners не тратятся.
+
+Артефакты Release: `Setup_DLMM.exe` (обычный установщик) и
+`DeadlockModManager-Portable-win64.zip` (portable). Во вкладке Actions оба
+файла лежат как артефакт `Setup_DLMM` после каждого запуска.
 
 ## Подпись кода (опционально)
 
