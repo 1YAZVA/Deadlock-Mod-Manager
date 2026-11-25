@@ -18,6 +18,7 @@ from PyQt6.QtWidgets import (
 
 from dlmm.core.mods import InstalledMod, ModError, ModManager
 from dlmm.core.system import open_in_explorer
+from dlmm.ui.theme import DIM, OK
 from dlmm.ui.widgets import human_size
 
 _ROLE_MOD = Qt.ItemDataRole.UserRole
@@ -101,7 +102,7 @@ class InstalledPage(QWidget):
             self._table.setItem(row, 2, QTableWidgetItem(human_size(mod.size)))
             status_item = QTableWidgetItem("Включён" if mod.enabled else "Отключён")
             status_item.setForeground(
-                QColor("#43E29B" if mod.enabled else "#8A95A3")
+                QColor(OK if mod.enabled else DIM)
             )
             self._table.setItem(row, 3, status_item)
 

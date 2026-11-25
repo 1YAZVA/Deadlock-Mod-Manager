@@ -5,14 +5,15 @@
 один клик, запуском игры **с модами / без модов (Vanilla)** и работой
 в системном трее.
 
-> Тёмный интерфейс в стиле Deadlock и deadlockru.ru: чёрно-серый фон,
-> мятно-зелёный и бирюзовый акценты, фирменная эмблема «глаз в прицеле» — в
-> шапке, иконке `.exe` и в трее.
+> Тёмный интерфейс в стиле [deadlockru.ru](https://deadlockru.ru/):
+> тёмный зелёно-графитовый фон `#0d1110`, золотой акцент `#c8a96a`, шрифты
+> `Unbounded` и `Golos Text` (встроены в приложение), фирменная эмблема
+> «глаз в прицеле» — в шапке, иконке `.exe` и в трее.
 
 [![CI](https://github.com/1YAZVA/Deadlock-Mod-Manager/actions/workflows/build.yml/badge.svg)](https://github.com/1YAZVA/Deadlock-Mod-Manager/actions/workflows/build.yml)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-[![Download](https://img.shields.io/badge/%D0%A1%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C-Setup__DLMM.exe-43E29B)](https://github.com/1YAZVA/Deadlock-Mod-Manager/releases/latest/download/Setup_DLMM.exe)
+[![Download](https://img.shields.io/badge/%D0%A1%D0%BA%D0%B0%D1%87%D0%B0%D1%82%D1%8C-Setup__DLMM.exe-C8A96A)](https://github.com/1YAZVA/Deadlock-Mod-Manager/releases/latest/download/Setup_DLMM.exe)
 
 ## Возможности
 

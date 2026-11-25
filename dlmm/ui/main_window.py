@@ -26,6 +26,7 @@ from dlmm.paths import asset
 from dlmm.ui.installed_page import InstalledPage
 from dlmm.ui.mods_page import ModsPage
 from dlmm.ui.settings_page import SettingsPage
+from dlmm.ui.theme import ACCENT, gold_glow
 from dlmm.ui.workers import GameSessionWatcher
 
 
@@ -75,6 +76,8 @@ class MainWindow(QMainWindow):
     def _build_sidebar(self) -> QWidget:
         sidebar = QWidget()
         sidebar.setObjectName("sidebar")
+        # Иначе QSS-фон (радиальная золотая подсветка сверху) не рисуется
+        sidebar.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         sidebar.setFixedWidth(250)
         root = QVBoxLayout(sidebar)
         root.setContentsMargins(16, 18, 16, 14)
@@ -90,13 +93,15 @@ class MainWindow(QMainWindow):
                 Qt.TransformationMode.SmoothTransformation,
             )
             logo.setPixmap(pixmap)
+            gold_glow(logo, blur=16, opacity=60)
         else:
             logo.setText("◉")
-            logo.setStyleSheet("color: #43E29B; font-size: 34px;")
+            logo.setStyleSheet(f"color: {ACCENT}; font-size: 34px;")
         logo_row.addWidget(logo)
         titles = QVBoxLayout()
         title = QLabel("DEADLOCK")
         title.setObjectName("logoTitle")
+        gold_glow(title, blur=24, opacity=70)
         subtitle = QLabel("MOD MANAGER")
         subtitle.setObjectName("logoSub")
         titles.addWidget(title)
